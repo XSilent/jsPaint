@@ -1,0 +1,47 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style>
+            #myDraw{
+                border-style: dashed;
+                border-width: 1px;
+                border-color: black;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="myDraw" height="300" ></canvas>
+        
+        
+        
+        <script>
+            var myCanvas = document.getElementById("myDraw");
+            var drawContext = myCanvas.getContext('2d');
+            alert( typeof drawContext );
+            
+            
+            Tool = function()
+            {
+                var width = 10;
+                var color = "green";
+                
+                this.draw = function(canvasContext, event)
+                {
+                    var posX = event.clientX;
+                };
+                
+                
+            };
+            
+    
+    
+        </script>
+    </body>
+</html>
+
