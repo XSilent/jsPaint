@@ -1,0 +1,8 @@
+
+
+localStorage:
+http://t3n.de/news/html5-local-storage-daten-offlinebetrieb-speichern-350314/
+
+
+localStorage.setItem("key", "wert");
+localStorage.getItem("key");
