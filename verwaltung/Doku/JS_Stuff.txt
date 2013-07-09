@@ -1,8 +1,49 @@
+Web Storage
+- unterscheidet local und session
+
+source: 
+	http://en.wikipedia.org/wiki/Web_storage
+	http://www.mediaevent.de/javascript/web-storage.html
 
 
-localStorage:
-http://t3n.de/news/html5-local-storage-daten-offlinebetrieb-speichern-350314/
+	LOCAL STORAGE
+	- persistent
+	- ist für die komplette domain zugänglich (über Fenster/Tabs hinweg)
+
+	source: http://t3n.de/news/html5-local-storage-daten-offlinebetrieb-speichern-350314/
+
+	syntax:
+		// Store value on the browser beyond the duration of the session
+		localStorage.setItem('key', 'value');
+		 
+		// Retrieve value (works even after closing and re-opening the browser)
+		localStorage.getItem('key');
+
+		// Delete Value
+		localStorage.removeItem('key')
+
+		// Empty the Database
+		localStorage.clear();
 
 
-localStorage.setItem("key", "wert");
-localStorage.getItem("key");
+	SESISON STORAGE:
+	- überdauert die session (solange Fenster/Tab geöffnet ist)
+	- ist nur für das Fenster zugänglich
+
+	source: http://www.mediaevent.de/javascript/session-storage.html
+
+	syntax:
+		// Store value on browser for duration of the session
+		sessionStorage.setItem('key', 'value');
+		 
+		// Retrieve value (gets deleted when browser is closed and re-opened)
+		sessionStorage.getItem('key');
+
+		// Delete Value
+		sessionStorage.removeItem('key')
+
+		// Empty the Database
+		sessionStorage.clear()
+
+
+
