@@ -8,10 +8,12 @@
 
 <script type="text/javascript">
 	
- getSessionID();
+var sessionID = getSessionID();
+document.write('via getSessionID: ', sessionID,'<br/>');
+document.write('via localStorage: ', localStorage.getItem('sessionID'),'<br/>');
 
 </script>
-<br />
+<br/>
 
 <button onclick="loadArt()">Load Art!</button>
 
