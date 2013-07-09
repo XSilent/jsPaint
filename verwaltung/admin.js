@@ -45,12 +45,14 @@ function getSessionID () {
 			localStorage.setItem('sessionID',sessionID);
 			console.log('added a sessionID to localStorge(sessionID)');
 		};
-		
-	return sessionID;
+	
+	localStorage.setItem('sessionID',sessionID);
+	
+	console.log("Tach auch! Deine Session ist: " + localStorage.getItem('sessionID'));
 }
 
 
-/*
+
 function loadArt (sessionID+Canvas+Name) {
 
 	Speicher Auslesen;
@@ -84,7 +86,7 @@ function newArt () {
 	console.log('hier wird geneut');
 }
 
-*/
+
 
 function deleteArt () {
 
