@@ -51,34 +51,48 @@ function getSessionID () {
 
 
 /*
-function loadArt (sessionID+Canvas+Name) {
+function loadArt () {
 
-	Speicher Auslesen;
+1:	Speicher Auslesen;
 	Verfügbare Bilder anzeigen;
-	Ausahl;
+	Auswahl;
 	localStorage.getItem(input)
-	
-	console.log('hier wird geladet');
+
+2:	Name eingeben;
+	projekt laden; 
+
+	console.log('hier wird geladet');	
+}
+*/
+
+
+function saveArt (inputZeichenflaeche) {
+
+	var artName = prompt('Bitte Namen eingeben:');
+	if (localStorage.getItem(artName) == null) {
+		localStorage.setItem(artName,inputZeichenflaeche)
+		console.log('kein Name gefunden. jetzt wird if gespeichert')
+	} else {
+		prompt('Name schon vergeben. Willst du wirklich ueberschreiben? Sonst hier neuen Namen eingeben',artName);
+		localStorage.setItem(artName,inputZeichenflaeche);
+		console.log('jetzt wird else gespeichert');
+
+	}
+	/*Namen fuer Kunst eingeben;
+	check ob name schon vergeben
+		Fehlermeldung bei Kollision
+	localStorage.setItem(sessionID+Name)
+	*/
 }
 
 
-
-function saveArt (sessionID+Canvas+Name) {
-
-	Namen fuer Kunst eingeben;
-	localStorage.setItem(sessionID+Canvas+Name)
-	
-	console.log('hier wird gespeichert');
-}
-
-
-	
+/*	
 function undoArt () {
 	console.log('hier wird gerueckgaengigt');
 }
+*/
 
-
-	
+/*	
 function newArt () {
 
 	console.log('hier wird geneut');
