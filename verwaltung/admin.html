@@ -1,0 +1,36 @@
+<html>
+<head>
+</head>
+<body>
+<h1>hey ho, let's go!</h1>
+
+<script type="text/javascript" src="admin.js"></script>
+
+<script type="text/javascript">
+	
+var sessionID = getSessionID();
+document.write('via getSessionID: ', sessionID,'<br/>');
+document.write('via localStorage: ', localStorage.getItem('sessionID'),'<br/>');
+
+</script>
+
+<br/>
+	<ul style="list-style:none">
+		<li>
+			<button onclick="undoArt()">Undo</button>
+		</li>
+		<li>
+			<button onclick="newArt()">New Art!</button>
+		</li>
+		<li>
+			<button onclick="saveArt()">Save Art!</button>
+		</li>
+		<li>
+			<button onclick="loadArt()">Load Art!</button>
+		</li>
+		<li>
+			<button onclick="deleteArt()">Clear Storage</button>
+		</li>
+	</ul>
+</body>
+</html>
