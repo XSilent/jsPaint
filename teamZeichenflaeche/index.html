@@ -4,7 +4,17 @@
 <script type = "text/javascript" src = "js/zeichenflaeche.js"> </script>
 </head>
 <body>
+<div id="aContainer"></div>
 
+<canvas id= "htmlCanvas" height = "300" width = "400" ></canvas>
 
+<script type="text/javascript">
+	var myHandler = new CanvasHandler();
+	myHandler.createNewCanvas('aContainer' , 'secondCanvas', 400, 300);
+	//myHandler.setCanvas(document.getElementById('htmlCanvas'));
+	
+</script>
 </body>
-</html> 
+</html>
+
+ 
