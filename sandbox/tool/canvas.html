@@ -16,30 +16,46 @@ and open the template in the editor.
         </style>
     </head>
     <body>
-        <canvas id="myDraw" height="300" ></canvas>
+        <canvas id="myDraw" height="300"></canvas>
         
         
         
         <script>
-            var myCanvas = document.getElementById("myDraw");
-            var drawContext = myCanvas.getContext('2d');
-            alert( typeof drawContext );
             
             
             Tool = function()
             {
                 var width = 10;
-                var color = "green";
+                var color = '#008000';
                 
-                this.draw = function(canvasContext, event)
+                this.draw = function(event,canvasContext)
                 {
+//                    if( !(canvasContext instanceof  'CanvasRenderingContext2D') ) {
+//                        console.log('not right');
+//                    }
+                    
                     var posX = event.clientX;
+                    var posY = event.clientY;
+                    console.log(canvasContext);
+                    //canvasContext.moveto(posX,posY);
+                    //canvasContext.lineto(posX,posY);
+                    
+                    canvasContext.fillstyle = color;
+                    canvasContext.beginPath();
+                    canvasContext.arc(posX,posY,width,0,Math.PI * 2,false);
+                    canvasContext.closePath();
+                    canvasContext.fill();
+                    //canvasContext.stroke(posX,posY);
                 };
                 
                 
             };
             
-    
+            var myCanvas = document.getElementById("myDraw");
+            var drawContext = myCanvas.getContext('2d');
+            var tool = new Tool();
+            myCanvas.addEventListener('mousedown',function(event){tool.draw(event, drawContext);},true);
+            myCanvas.addEventListener('mousemove',function(event){tool.draw(event, drawContext);},true);
     
         </script>
     </body>
