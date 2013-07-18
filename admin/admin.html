@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
 </head>
@@ -14,6 +15,13 @@ document.write('via localStorage: ', localStorage.getItem('sessionID'),'<br/>');
 
 </script>
 
+<input type="text" id="Zeichenflaecheimitat">
+
+
+<script type="text/javascript">
+	var Zeichenflaeche = document.getElemetById('Zeichenflaecheimitat').value;
+</script>
+
 <br/>
 	<ul style="list-style:none">
 		<li>
@@ -23,7 +31,7 @@ document.write('via localStorage: ', localStorage.getItem('sessionID'),'<br/>');
 			<button onclick="newArt()">New Art!</button>
 		</li>
 		<li>
-			<button onclick="saveArt()">Save Art!</button>
+			<button onclick="saveArt(Zeichenflaeche)">Save Art!</button>
 		</li>
 		<li>
 			<button onclick="loadArt()">Load Art!</button>
@@ -32,5 +40,6 @@ document.write('via localStorage: ', localStorage.getItem('sessionID'),'<br/>');
 			<button onclick="deleteArt()">Clear Storage</button>
 		</li>
 	</ul>
+
 </body>
 </html>
