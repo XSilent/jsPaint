@@ -92,6 +92,8 @@ var CanvasHandler = function ()
 			var imageObject = history[history.length - 1];
 			canvasElement.setAttribute('width', imageObject.width);
 			canvasElement.setAttribute('height', imageObject.height);
+			this.get2DContext().width = imageObject.width;
+			this.get2DContext().height = imageObject.height;
 			this.get2DContext().putImageData(imageObject, 0, 0);
 		}
 	}
