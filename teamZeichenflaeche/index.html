@@ -1,19 +1,91 @@
 <html>
 <head>
-<title>Zeichenfl‰che</title>
-<script type = "text/javascript" src = "js/zeichenflaeche.js"> </script>
+	<meta charset="utf-8" />
+	<title>Zeichenfl√§che</title>
+	<script type = "text/javascript" src = "js/canvasHandler.js"> </script>
+	<style>
+		#aContainer {width: 410px; height: 310px;}
+	</style>
 </head>
 <body>
-<div id="aContainer"></div>
-
-<canvas id= "htmlCanvas" height = "300" width = "400" ></canvas>
-
-<script type="text/javascript">
-	var myHandler = new CanvasHandler();
-	myHandler.createNewCanvas('aContainer' , 'secondCanvas', 400, 300);
-	//myHandler.setCanvas(document.getElementById('htmlCanvas'));
+	<div id="aContainer"></div>
 	
-</script>
+	<button onclick="makeNew();">new</button>
+	<button onclick="testDrawings();">draw test-picture</button>
+	<button onclick="undoLast();" id="button_undo" disabled="1">undo</button>
+	&nbsp;&nbsp;&nbsp;
+	<button onclick="saveIt();">save it (wait while processing)</button>
+	<button onclick="loadExternal();" id="button_load"  disabled="1">load (if textarea below is not empty)</button>
+	
+	<br/>
+	<!-- simple test rectangle -->
+	<textarea id="textarea_as_store" cols="100" rows="4" readonly="1"></textarea>
+
+	<script type="text/javascript">
+		var myHandler = new CanvasHandler();
+		myHandler.appendNewCanvas('aContainer' , 'myCanvas', 200, 200);
+
+		//examples for the other teams
+		function testDrawings() {
+			var content = myHandler.get2DContext();
+			content.fillStyle = "rgba(0, 0, 200, 0.5)";
+			content.fillRect (0, 0, 50, 50);
+			
+			//call this after each step (tool usage or else)
+			myHandler.addHistorySnapshot();
+			
+			document.getElementById('button_undo').disabled = false;
+			
+			content.fillStyle = "rgba(0, 200, 0, 0.5)";
+			content.fillRect (25, 25, 75, 75);
+			
+			myHandler.addHistorySnapshot();
+			
+			content.fillStyle = "rgba(200, 0, 0, 0.5)";
+			content.fillRect (50, 50, 100, 100);
+			myHandler.addHistorySnapshot();
+		}
+		
+		function undoLast() {
+			myHandler.revertToLastSnapshot();
+			document.getElementById('button_undo').disabled = !myHandler.canUndo();
+		}
+		
+		function makeNew() {
+			myHandler.clearAll();
+			document.getElementById('button_undo').disabled = !myHandler.canUndo();
+		}
+		
+		//just an example
+		function saveIt() {
+			var imageObject = myHandler.getWholeImageObject();
+			var temp = {width : imageObject.width, height : imageObject.height, data : []};
+			
+			for (var i = 0; i < imageObject.data.length; i++) {
+				temp.data[i] = imageObject.data[i];
+			}
+			
+			//simple json of the data (challenge: convert to 'png' or 'bmp')
+			document.getElementById('textarea_as_store').innerHTML = JSON.stringify(temp);
+			
+			document.getElementById('button_load').disabled = false;
+		}
+		
+		//just an example
+		function loadExternal() {
+			jsonText = document.getElementById('textarea_as_store').innerHTML;
+			var myObject = JSON.parse(jsonText);
+			var imageObject = myHandler.getClearImageObject(myObject.width, myObject.height);
+
+			for (var i = 0; i < myObject.data.length; i++) {
+				imageObject.data[i] = myObject.data[i];
+			}
+			
+			myHandler.setInitialImageData(imageObject);
+			document.getElementById('button_undo').disabled = !myHandler.canUndo();
+		}
+	</script>
+
 </body>
 </html>
 
