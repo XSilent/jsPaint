@@ -52,7 +52,7 @@ function getSessionID () {
 
 
 function loadArt () {
-	artName = prompt('Welche Kust soll geladen werden? ');
+	var artName = prompt('Welche Kust soll geladen werden? ');
 /*
 1:	Speicher Auslesen;
 	Verfügbare Bilder anzeigen;
@@ -62,13 +62,13 @@ function loadArt () {
 2:	Name eingeben;
 	projekt laden; 
 */
-	console.log('die Kunst:', localStorage.getItem(artName));	
+	console.log('die Kunst: ', localStorage.getItem(artName));	
 }
 
 
 
 function saveArt (inputZeichenflaeche) {
-
+	console.log(inputZeichenflaeche);
 	var artName = prompt('Bitte Namen eingeben:');
 	if (localStorage.getItem(artName) == null) {
 		localStorage.setItem(artName,inputZeichenflaeche)

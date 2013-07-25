@@ -129,4 +129,30 @@ var CanvasHandler = function ()
 	{
 		this.get2DContext().clearRect(0, 0, dimensions.width, dimensions.height);
 	}
+
+
+
+	//just an example
+	this.export = function() {
+		var imageObject = that.getWholeImageObject();
+		var temp = {width : imageObject.width, height : imageObject.height, data : []};
+
+		for (var i = 0; i < imageObject.data.length; i++) {
+			temp.data[i] = imageObject.data[i];
+		}
+
+		return JSON.stringify(temp);
+	}
+
+	//just an example
+	this.import = function(jsonText) {
+		var myObject = JSON.parse(jsonText);
+		var imageObject = that.getClearImageObject(myObject.width, myObject.height);
+
+		for (var i = 0; i < myObject.data.length; i++) {
+			imageObject.data[i] = myObject.data[i];
+		}
+
+		that.setInitialImageData(imageObject);
+	}
 }

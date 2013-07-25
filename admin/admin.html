@@ -15,12 +15,10 @@ document.write('via localStorage: ', localStorage.getItem('sessionID'),'<br/>');
 
 </script>
 
-<input type="text" id="Zeichenflaecheimitat">
+<form name="formular">
+<input type="text" id="Zeichenflaecheimitat" name="Zeichenflaecheimitat">
+</form>
 
-
-<script type="text/javascript">
-	var Zeichenflaeche = document.getElemetById('Zeichenflaecheimitat').value;
-</script>
 
 <br/>
 	<ul style="list-style:none">
@@ -31,7 +29,7 @@ document.write('via localStorage: ', localStorage.getItem('sessionID'),'<br/>');
 			<button onclick="newArt()">New Art!</button>
 		</li>
 		<li>
-			<button onclick="saveArt(Zeichenflaeche)">Save Art!</button>
+			<button onclick="saveArt(document.formular.Zeichenflaecheimitat.value)">Save Art!</button>
 		</li>
 		<li>
 			<button onclick="loadArt()">Load Art!</button>
@@ -40,6 +38,7 @@ document.write('via localStorage: ', localStorage.getItem('sessionID'),'<br/>');
 			<button onclick="deleteArt()">Clear Storage</button>
 		</li>
 	</ul>
+
 
 </body>
 </html>

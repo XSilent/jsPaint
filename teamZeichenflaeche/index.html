@@ -55,33 +55,18 @@
 			myHandler.clearAll();
 			document.getElementById('button_undo').disabled = !myHandler.canUndo();
 		}
-		
+
 		//just an example
 		function saveIt() {
-			var imageObject = myHandler.getWholeImageObject();
-			var temp = {width : imageObject.width, height : imageObject.height, data : []};
-			
-			for (var i = 0; i < imageObject.data.length; i++) {
-				temp.data[i] = imageObject.data[i];
-			}
-			
 			//simple json of the data (challenge: convert to 'png' or 'bmp')
-			document.getElementById('textarea_as_store').innerHTML = JSON.stringify(temp);
-			
+			document.getElementById('textarea_as_store').innerHTML = myHandler.export();
 			document.getElementById('button_load').disabled = false;
 		}
-		
+
 		//just an example
 		function loadExternal() {
 			jsonText = document.getElementById('textarea_as_store').innerHTML;
-			var myObject = JSON.parse(jsonText);
-			var imageObject = myHandler.getClearImageObject(myObject.width, myObject.height);
-
-			for (var i = 0; i < myObject.data.length; i++) {
-				imageObject.data[i] = myObject.data[i];
-			}
-			
-			myHandler.setInitialImageData(imageObject);
+			myHandler.import(jsonText);
 			document.getElementById('button_undo').disabled = !myHandler.canUndo();
 		}
 	</script>
