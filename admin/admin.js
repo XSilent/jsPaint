@@ -8,6 +8,7 @@ methods:
 	undoArt = revert the last action
 	newArt = get a new empty canvas
 	deleteArt = delete your work	
+	listArt = creates an HTML table showing all content of localStorage
 */
 
 
@@ -109,7 +110,7 @@ function deleteArt () {
 }
 
 
-function showArt () {
+function listArt () {
 
 	document.write('<table>');
 	for(var i in localStorage) {
