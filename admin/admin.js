@@ -107,3 +107,16 @@ function deleteArt () {
 	
 	console.log('cleared localStorage');
 }
+
+
+function showArt () {
+
+	document.write('<table>');
+	for(var i in localStorage) {
+		console.log(localStorage[i]);
+		document.write('<tr><td align="right">',i,': </td>','<td><button onclick="">',localStorage[i],'</button></br></td>');
+	}
+	document.write('</tr></table>');
+	// hier muss noch das HTML von oben in einer Variablen zurückgegeben werden, denke ich
+}
+
