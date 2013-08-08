@@ -1,4 +1,4 @@
-		<html>
+<html>
 <head>
 	<meta charset="utf-8" />
 	<title>Zeichenfläche</title>
@@ -11,27 +11,28 @@
 </head>
 <body>
 	<div id="aContainer"></div>
-	
+
 	<button onclick="makeNew();">new</button>
 	<button onclick="testDrawings();">draw test-picture</button>
 	<button onclick="undoLast();" id="button_undo" disabled="1">undo</button>
 	&nbsp;&nbsp;&nbsp;
 	<button onclick="saveIt();">save it (wait while processing)</button>
 	<button onclick="loadExternal();" id="button_load">load</button>
-	<button onclick="drawArt()">What's the Art in Stock?</button>
-
+	<button onclick="deleteArt()">delete localStorage</button>
 	<br/>
 	<!-- simple test rectangle -->
+	<div id="output"></div>
 	<textarea id="textarea_as_store" cols="100" rows="4" readonly="1"></textarea>
-	<div id="textarea_list" cols="100" rows="4" readonly="1"></div>
 
 	<script type="text/javascript">
+		document.getElementById('output').innerHTML = listArt();
+
 		var myHandler = new CanvasHandler();
 		myHandler.appendNewCanvas('aContainer' , 'myCanvas', 200, 200);
 
 		//examples for the other teams
 		function testDrawings() {
-			var content = myHandler.get2DContext();
+			var content = myHandler.getContext('2d');
 			content.fillStyle = "rgba(0, 0, 200, 0.5)";
 			content.fillRect (0, 0, 50, 50);
 			
@@ -66,21 +67,24 @@
 			document.getElementById('textarea_as_store').innerHTML = myHandler.export();
 			//document.getElementById('button_load').disabled = false;
 			saveArt(myHandler.export());
+			listArtInOutput();
 		}
 
 		//just an example
-		function loadExternal() {
-			myHandler.import(loadArt());
-			document.getElementById('button_undo').disabled = !myHandler.canUndo();
-
+		function loadExternal(id) {
+			if (id == null) {
+				myHandler.import(loadArt(id));
+				document.getElementById('button_undo').disabled = !myHandler.canUndo();
+			} else {
+				myHandler.import(localStorage.getItem(id));
+			}
 		}
 
-		function drawArt() {
-			document.getElementById('textarea_list').innerHTML = listArt();
+		function listArtInOutput () {
+			document.getElementById('output').innerHTML = listArt();
 		}
+
 	</script>
 
 </body>
 </html>
-
- 

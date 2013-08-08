@@ -52,34 +52,24 @@ function getSessionID () {
 
 
 
-function loadArt () {
-	var artName = prompt('Welche Kust soll geladen werden? ');
-/*
-1:	Speicher Auslesen;
-	Verfügbare Bilder anzeigen;
-	Auswahl;
-	localStorage.getItem(input)
+function loadArt (artName) {
+	if ( artName == null) {
+	artName = prompt('Welche Kust soll geladen werden? ');
+	}
 
-2:	Name eingeben;
-	projekt laden; 
-*/
-	console.log('die Kunst: ', localStorage.getItem(artName));
 	return localStorage.getItem(artName);
 }
 
 
 
 function saveArt (inputZeichenflaeche) {
-	console.log(inputZeichenflaeche);
+	console.log('saving...');
 	var artName = prompt('Bitte Namen eingeben:');
 	if (localStorage.getItem(artName) == null) {
 		localStorage.setItem(artName,inputZeichenflaeche)
-		console.log('kein Name gefunden. jetzt wird if gespeichert')
 	} else {
 		prompt('Name schon vergeben. Willst du wirklich ueberschreiben? Sonst hier neuen Namen eingeben',artName);
 		localStorage.setItem(artName,inputZeichenflaeche);
-		console.log('jetzt wird else gespeichert');
-
 	}
 	/*Namen fuer Kunst eingeben;
 	check ob name schon vergeben
@@ -112,12 +102,11 @@ function deleteArt () {
 
 
 function listArt () {
-	var	artList = '<table>';
-		for(var i in localStorage) {
-			console.log(localStorage[i]);
-			artList = artList + '<tr><td align="right">' + i + ': </td> <td> <button onclick="">' + localStorage[i] + '</button></br></td>';
-		}
-		artList = artList + '</tr></table>';
+	var	artList = 'Art in Stock:</br>';
+	for(var i in localStorage) {
+		artList = artList + '<button onclick="loadExternal(\'' +i+ '\')">' + i + '</button>';
+
+	}
 	return artList;
 }
 
