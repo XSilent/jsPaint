@@ -112,14 +112,12 @@ function deleteArt () {
 
 
 function listArt () {
-	function artList (){
-		document.write('<table>');
+	var	artList = '<table>';
 		for(var i in localStorage) {
 			console.log(localStorage[i]);
-			document.write('<tr><td align="right">',i,': </td>','<td><button onclick="">',localStorage[i],'</button></br></td>');
+			artList = artList + '<tr><td align="right">' + i + ': </td> <td> <button onclick="">' + localStorage[i] + '</button></br></td>';
 		}
-		document.write('</tr></table>');
-	}
+		artList = artList + '</tr></table>';
 	return artList;
 }
 
