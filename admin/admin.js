@@ -63,7 +63,8 @@ function loadArt () {
 2:	Name eingeben;
 	projekt laden; 
 */
-	console.log('die Kunst: ', localStorage.getItem(artName));	
+	console.log('die Kunst: ', localStorage.getItem(artName));
+	return localStorage.getItem(artName);
 }
 
 
@@ -111,13 +112,14 @@ function deleteArt () {
 
 
 function listArt () {
-
-	document.write('<table>');
-	for(var i in localStorage) {
-		console.log(localStorage[i]);
-		document.write('<tr><td align="right">',i,': </td>','<td><button onclick="">',localStorage[i],'</button></br></td>');
+	function artList (){
+		document.write('<table>');
+		for(var i in localStorage) {
+			console.log(localStorage[i]);
+			document.write('<tr><td align="right">',i,': </td>','<td><button onclick="">',localStorage[i],'</button></br></td>');
+		}
+		document.write('</tr></table>');
 	}
-	document.write('</tr></table>');
-	// hier muss noch das HTML von oben in einer Variablen zurückgegeben werden, denke ich
+	return artList;
 }
 
