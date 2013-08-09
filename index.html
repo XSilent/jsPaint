@@ -1,34 +1,62 @@
+<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8" />
 	<title>Zeichenfläche</title>
 	<script type = "text/javascript" src = "teamZeichenflaeche/js/canvasHandler.js"> </script>
 	<script type = "text/javascript" src = "admin/admin.js"></script>
+	<script type = "text/javascript" src = "tool/tool.js"></script>
+	<link rel="stylesheet" type="text/css" href="jsPaint.css">
 
-	<style>
-		#aContainer {width: 410px; height: 310px;}
-	</style>
 </head>
 <body>
 	<div id="aContainer"></div>
+	<div id="adminBox">
+		<ul style="list-style:none" align="right">
+			<li>
+			<button onclick="dontUseTool();">NO Tool</button>
+			</li>
+						<li>
+			<button onclick="useTool();">Tool</button>
+			</li>
+			
+			<li>
+			<button onclick="makeNew();">new</button>
+			</li>
+			
+			<li>
+				<button onclick="testDrawings();">draw test-picture</button>
+			
+			</li>
+			
+			<li>
+				<button onclick="undoLast();" id="button_undo" disabled="1">undo</button>
+			</li>
+			
+			<li>
+				<button onclick="saveIt();">save</button>
+			</li>
+			
+			<li>
+				<button onclick="loadExternal();" id="button_load">load</button>
+			</li>
+			
+			<li>
+				<button onclick="deleteArt()">clear localStorage</button>
+			</li>
 
-	<button onclick="makeNew();">new</button>
-	<button onclick="testDrawings();">draw test-picture</button>
-	<button onclick="undoLast();" id="button_undo" disabled="1">undo</button>
-	&nbsp;&nbsp;&nbsp;
-	<button onclick="saveIt();">save it (wait while processing)</button>
-	<button onclick="loadExternal();" id="button_load">load</button>
-	<button onclick="deleteArt()">delete localStorage</button>
-	<br/>
+			<br/>
+		</ul>
+	</div>
 	<!-- simple test rectangle -->
-	<div id="output"></div>
-	<textarea id="textarea_as_store" cols="100" rows="4" readonly="1"></textarea>
+	<div id="adminOutput"></div>
+	<textarea id="textarea_as_store" cols="50" rows="4" readonly="1"></textarea>
 
 	<script type="text/javascript">
-		document.getElementById('output').innerHTML = listArt();
+		document.getElementById('adminOutput').innerHTML = listArt();
 
 		var myHandler = new CanvasHandler();
-		myHandler.appendNewCanvas('aContainer' , 'myCanvas', 200, 200);
+		myHandler.appendNewCanvas('aContainer', 'myCanvas', 200, 200);
 
 		//examples for the other teams
 		function testDrawings() {
@@ -78,10 +106,43 @@
 			} else {
 				myHandler.import(localStorage.getItem(id));
 			}
+			document.getElementById('textarea_as_store').innerHTML = myHandler.export();
+			myCanvas.removeEventListener('mousedown',function(event){tool.draw(event, content);});
+			//myCanvas.removeEventListener('mousemove',function(event){tool.draw(event, content);},false);
 		}
 
 		function listArtInOutput () {
-			document.getElementById('output').innerHTML = listArt();
+			document.getElementById('adminOutput').innerHTML = listArt();
+		}
+
+		function draw(event,canvasContext){
+			var posX = event.clientX;
+			var posY = event.clientY;
+			var width = 10;
+    		var color = '#008000';
+			//console.log(canvasContext);
+			//canvasContext.moveto(posX,posY);
+			//canvasContext.lineto(posX,posY);
+
+			canvasContext.fillstyle = color;
+			canvasContext.beginPath();
+			canvasContext.arc(posX,posY,width,0,Math.PI * 2,false);
+			canvasContext.closePath();
+			canvasContext.fill();
+			//canvasContext.stroke(posX,posY);
+		}
+
+		//trying to get the tool to fill the canvas
+		function useTool(){
+			var tool = new Tool();
+			var content = myHandler.getContext('2d');
+			myCanvas.addEventListener('mousedown',function(){tool.draw(event, content);});
+			myCanvas.addEventListener('mousemove',function(){tool.draw(event, content);});
+		}
+
+		function dontUseTool(){
+			myCanvas.removeEventListener('mousemove',draw(event, content));
+			//myCanvas.addEventListener('mousemove',function(event){ draw(event, content);},true);
 		}
 
 	</script>
