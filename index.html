@@ -101,7 +101,8 @@
 		//just an example
 		function loadExternal(id) {
 			if (id == null) {
-				myHandler.import(loadArt(id));
+				id = prompt('Welche Kust soll geladen werden? ');
+				myHandler.import(localStorage.getItem(id));
 				document.getElementById('button_undo').disabled = !myHandler.canUndo();
 			} else {
 				myHandler.import(localStorage.getItem(id));
@@ -115,7 +116,9 @@
 			document.getElementById('adminOutput').innerHTML = listArt();
 		}
 
-		function draw(event,canvasContext){
+/*
+// not sure how this ended up here...
+			function draw(event,canvasContext){
 			var posX = event.clientX;
 			var posY = event.clientY;
 			var width = 10;
@@ -131,6 +134,7 @@
 			canvasContext.fill();
 			//canvasContext.stroke(posX,posY);
 		}
+*/
 
 		//trying to get the tool to fill the canvas
 		function useTool(){

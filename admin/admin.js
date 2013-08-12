@@ -3,12 +3,12 @@ This is the admin of jsPaint
 
 methods:
 	getSessionID = checks for a sessionID in localStorage and adds one if none is found
-	loadArt = get a canvas
+	//loadArt = get a canvas
 	saveArt = save canvas
 	undoArt = revert the last action
 	newArt = get a new empty canvas
 	deleteArt = delete your work	
-	listArt = creates an HTML table showing all content of localStorage
+	listArt = creates buttons showing all content of localStorage. with onclick event calling loadExternal
 */
 
 
@@ -52,6 +52,10 @@ function getSessionID () {
 
 
 
+/*
+
+// intergrated this in loadExternal
+
 function loadArt (artName) {
 	if ( artName == null) {
 	artName = prompt('Welche Kust soll geladen werden? ');
@@ -59,39 +63,22 @@ function loadArt (artName) {
 
 	return localStorage.getItem(artName);
 }
-
+*/
 
 
 function saveArt (inputZeichenflaeche) {
 	console.log('saving...');
 	var artName = prompt('Bitte Namen eingeben:');
 	if (localStorage.getItem(artName) == null) {
+		artName = getSessionID();
 		localStorage.setItem(artName,inputZeichenflaeche)
 	} else {
 		prompt('Name schon vergeben. Willst du wirklich ueberschreiben? Sonst hier neuen Namen eingeben',artName);
 		localStorage.setItem(artName,inputZeichenflaeche);
 	}
-	/*Namen fuer Kunst eingeben;
-	check ob name schon vergeben
-		Fehlermeldung bei Kollision
-	localStorage.setItem(sessionID+Name)
-	*/
+
 }
 
-
-/*	
-function undoArt () {
-	console.log('hier wird gerueckgaengigt');
-}
-*/
-
-/*	
-function newArt () {
-
-	console.log('hier wird geneut');
-}
-
-*/
 
 function deleteArt () {
 
