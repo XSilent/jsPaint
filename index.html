@@ -136,12 +136,13 @@
 		function useTool(){
 			var tool = new Tool();
 			var content = myHandler.getContext('2d');
-			myCanvas.addEventListener('mousedown',function(){tool.draw(event, content);});
-			myCanvas.addEventListener('mousemove',function(){tool.draw(event, content);});
+			document.getElementById('aContainer').addEventListener('mousedown',function(){tool.draw(event, content);});
+			//document.getElementById('aContainer').addEventListener('mousemove',function(){tool.draw(event, content);});
 		}
 
 		function dontUseTool(){
-			myCanvas.removeEventListener('mousemove',draw(event, content));
+			document.getElementById('aContainer').removeEventListener('mousedown');
+			//document.getElementById('aContainer').removeEventListener('mousemove');
 			//myCanvas.addEventListener('mousemove',function(event){ draw(event, content);},true);
 		}
 
