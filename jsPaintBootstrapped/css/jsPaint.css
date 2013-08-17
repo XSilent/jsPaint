@@ -1,0 +1,23 @@
+body {
+	margin:10px;
+}
+
+
+#aContainer {
+	width: 200px;
+	height: 200px;
+	border: 1px solid #428bca;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+#adminBox {
+	max-width: 200px;
+	padding: 5px;
+	float: right;
+}
+
+#textarea_as_store {
+	border: 2px solid #BFFF00;
+	min-height: 50px;
+}
