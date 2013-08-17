@@ -141,7 +141,7 @@
 			var tool = new Tool();
 			var content = myHandler.getContext('2d');
 			document.getElementById('aContainer').addEventListener('mousedown',function(){tool.draw(event, content);});
-			//document.getElementById('aContainer').addEventListener('mousemove',function(){tool.draw(event, content);});
+			document.getElementById('aContainer').addEventListener('mousemove',function(){tool.draw(event, content);});
 		}
 
 		function dontUseTool(){

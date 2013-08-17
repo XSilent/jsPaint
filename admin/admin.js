@@ -18,6 +18,9 @@ got it here: http://stackoverflow.com/a/873856
 needed for getSessionID
 */
 
+/*
+//SessionID Stuff not needed
+
 function createUUID() {
     // http://www.ietf.org/rfc/rfc4122.txt
     var s = [];
@@ -49,7 +52,7 @@ function getSessionID () {
 		
 	return sessionID;
 }
-
+*/
 
 
 /*
@@ -69,8 +72,8 @@ function loadArt (artName) {
 function saveArt (inputZeichenflaeche) {
 	console.log('saving...');
 	var artName = prompt('Bitte Namen eingeben:');
+
 	if (localStorage.getItem(artName) == null) {
-		artName = getSessionID();
 		localStorage.setItem(artName,inputZeichenflaeche)
 	} else {
 		prompt('Name schon vergeben. Willst du wirklich ueberschreiben? Sonst hier neuen Namen eingeben',artName);
