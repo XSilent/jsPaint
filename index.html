@@ -1,156 +1,92 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8" />
-	<title>Zeichenfläche</title>
-	<script type = "text/javascript" src = "teamZeichenflaeche/js/canvasHandler.js"> </script>
-	<script type = "text/javascript" src = "admin/admin.js"></script>
-	<script type = "text/javascript" src = "tool/tool.js"></script>
-	<link rel="stylesheet" type="text/css" href="jsPaint.css">
+  <head>
+    <title>jsPaint getting bootstrapped</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 
-</head>
-<body>
-	<div id="aContainer"></div>
-	<div id="adminBox">
-		<ul style="list-style:none" align="right">
-			<li>
-			<button onclick="dontUseTool();">NO Tool</button>
-			</li>
-						<li>
-			<button onclick="useTool();">Tool</button>
-			</li>
-			
-			<li>
-			<button onclick="makeNew();">new</button>
-			</li>
-			
-			<li>
-				<button onclick="testDrawings();">draw test-picture</button>
-			
-			</li>
-			
-			<li>
-				<button onclick="undoLast();" id="button_undo" disabled="1">undo</button>
-			</li>
-			
-			<li>
-				<button onclick="saveIt();">save</button>
-			</li>
-			
-			<li>
-				<button onclick="loadExternal();" id="button_load">load</button>
-			</li>
-			
-			<li>
-				<button onclick="deleteArt()">clear localStorage</button>
-			</li>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery-2.0.3.min.js"></script>
 
-			<br/>
-		</ul>
-	</div>
-	<!-- simple test rectangle -->
-	<div id="adminOutput"></div>
-	<textarea id="textarea_as_store" cols="50" rows="4" readonly="1"></textarea>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
 
-	<script type="text/javascript">
-		document.getElementById('adminOutput').innerHTML = listArt();
+    <!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond)
+    <script src="js/respond.js"></script> -->
 
-		var myHandler = new CanvasHandler();
-		myHandler.appendNewCanvas('aContainer', 'myCanvas', 200, 200);
+    <!-- jsPaint -->
+    <script type = "text/javascript" src = "js/canvasHandler.js"> </script>
+    <script type = "text/javascript" src = "js/admin.js"></script>
+    <script type = "text/javascript" src = "js/tool.js"></script>
+    <link href="css/jsPaint.css" rel="stylesheet" media="screen">
 
-		//examples for the other teams
-		function testDrawings() {
-			var content = myHandler.getContext('2d');
-			content.fillStyle = "rgba(0, 0, 200, 0.5)";
-			content.fillRect (0, 0, 50, 50);
-			
-			//call this after each step (tool usage or else)
-			myHandler.addHistorySnapshot();
-			
-			document.getElementById('button_undo').disabled = false;
-			
-			content.fillStyle = "rgba(0, 200, 0, 0.5)";
-			content.fillRect (25, 25, 75, 75);
-			
-			myHandler.addHistorySnapshot();
-			
-			content.fillStyle = "rgba(200, 0, 0, 0.5)";
-			content.fillRect (50, 50, 100, 100);
-			myHandler.addHistorySnapshot();
-		}
-		
-		function undoLast() {
-			myHandler.revertToLastSnapshot();
-			document.getElementById('button_undo').disabled = !myHandler.canUndo();
-		}
-		
-		function makeNew() {
-			myHandler.clearAll();
-			document.getElementById('button_undo').disabled = !myHandler.canUndo();
-		}
+  </head>
+  <body>
+    <div class="jsPaintContainer">
+      <div class="row">
+        <div class="col-lg-6 col-offset-3">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">jsPaint</h3>
+            </div>
+            <div class="panel-body">
+              <div class="btn-group">
+                <button class="btn btn-info" onclick="makeNew();">new</button>
+                <button class="btn btn-info" onclick="testDrawings();">test</button>
+                <button class="btn btn-default" onclick="undoLast();" id="button_undo" disabled="1">undo</button>
+              </div>
+              <div class="btn-group">
+                <button class="btn btn-success" onclick="useTool();">tool on</button>
+                <button class="btn btn-danger" onclick="dontUseTool();">tool off</button>
+              </div>
+              <div id="aContainer"></div>
+            </div>
+            <div class="panel-footer">
+                <button onclick="saveIt();" class="btn btn-success">save</button>
+                <button onclick="localStorage.clear();listArtInOutput();" class="btn btn-warning">clear</button>
+              <div class="btn-group dropup">
+                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                  Storage <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" id="storage-dropdown"></ul>
+              </div>
+              <div id="adminOutput"></div>
+            </div>
+          </div>
+          <!-- textarea id="textarea_as_store" cols="50" rows="4" readonly="1" class="well"></textarea -->
+        </div> <!-- //col-lg-6 col-offset-3 -->
+      </div> <!-- //row -->
+    </div> <!-- //container -->
 
-		//just an example
-		function saveIt() {
-			//simple json of the data (challenge: convert to 'png' or 'bmp')
-			document.getElementById('textarea_as_store').innerHTML = myHandler.export();
-			//document.getElementById('button_load').disabled = false;
-			saveArt(myHandler.export());
-			listArtInOutput();
-		}
+<!-- here comes the script! -->
 
-		//just an example
-		function loadExternal(id) {
-			if (id == null) {
-				id = prompt('Welche Kust soll geladen werden? ');
-				myHandler.import(localStorage.getItem(id));
-				document.getElementById('button_undo').disabled = !myHandler.canUndo();
-			} else {
-				myHandler.import(localStorage.getItem(id));
-			}
-			document.getElementById('textarea_as_store').innerHTML = myHandler.export();
-			myCanvas.removeEventListener('mousedown',function(event){tool.draw(event, content);});
-			//myCanvas.removeEventListener('mousemove',function(event){tool.draw(event, content);},false);
-		}
+  <script type="text/javascript">
+    document.getElementById('adminOutput').innerHTML = listArtBtn();
 
-		function listArtInOutput () {
-			document.getElementById('adminOutput').innerHTML = listArt();
-		}
+    var myHandler = new CanvasHandler();
+    myHandler.appendNewCanvas('aContainer', 'myCanvas', 200, 200);
+    document.getElementById('adminOutput').innerHTML = listArtBtn();
+    document.getElementById('storage-dropdown').innerHTML = listArtLi();
 
-/*
-// not sure how this ended up here...
-			function draw(event,canvasContext){
-			var posX = event.clientX;
-			var posY = event.clientY;
-			var width = 10;
-    		var color = '#008000';
-			//console.log(canvasContext);
-			//canvasContext.moveto(posX,posY);
-			//canvasContext.lineto(posX,posY);
+    function listArtInOutput () {
+      document.getElementById('adminOutput').innerHTML = listArtBtn();
+      document.getElementById('storage-dropdown').innerHTML = listArtLi();
+    }
 
-			canvasContext.fillstyle = color;
-			canvasContext.beginPath();
-			canvasContext.arc(posX,posY,width,0,Math.PI * 2,false);
-			canvasContext.closePath();
-			canvasContext.fill();
-			//canvasContext.stroke(posX,posY);
-		}
-*/
+    //trying to get the tool to fill the canvas
+    function useTool(){
+      var tool = new Tool();
+      var content = myHandler.getContext('2d');
+      document.getElementById('myCanvas').addEventListener('mousedown',function(){tool.draw(event, content);});
+      document.getElementById('myCanvas').addEventListener('mousemove',function(){tool.draw(event, content);});
+      document.getElementById('myCanvas').addEventListener('touchmove',function(){tool.draw(event, content);});
+    }
 
-		//trying to get the tool to fill the canvas
-		function useTool(){
-			var tool = new Tool();
-			var content = myHandler.getContext('2d');
-			document.getElementById('aContainer').addEventListener('mousedown',function(){tool.draw(event, content);});
-			document.getElementById('aContainer').addEventListener('mousemove',function(){tool.draw(event, content);});
-		}
-
-		function dontUseTool(){
-			document.getElementById('aContainer').removeEventListener('mousedown');
-			//document.getElementById('aContainer').removeEventListener('mousemove');
-			//myCanvas.addEventListener('mousemove',function(event){ draw(event, content);},true);
-		}
-
-	</script>
-
-</body>
+    function dontUseTool(){
+      document.getElementById('myHandler').removeEventListener('mousedown');
+      document.getElementById('myHandler').removeEventListener('mousemove');
+    }
+  </script>
+  </body>
 </html>
