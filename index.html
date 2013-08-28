@@ -19,6 +19,7 @@
     <script type = "text/javascript" src = "js/canvasHandler.js"> </script>
     <script type = "text/javascript" src = "js/admin.js"></script>
     <script type = "text/javascript" src = "js/tool.js"></script>
+	<script type = "text/javascript" src = "js/tool_effects.js"></script>
     <link href="css/jsPaint.css" rel="stylesheet" media="screen">
 
   </head>
@@ -40,6 +41,14 @@
                 <button class="btn btn-success" onclick="useTool();">tool on</button>
                 <button class="btn btn-danger" onclick="dontUseTool();">tool off</button>
               </div>
+	          <div class="btn-group">
+				<button class="btn btn-success" onclick="toolNoise();">Noise</button>
+				<button class="btn btn-success" onclick="toolContrast(-20);">Contrast -</button>
+				<button class="btn btn-success" onclick="toolContrast(20);">Contrast +</button>
+				<button class="btn btn-success" onclick="toolInvert();">Invert</button>
+				<button class="btn btn-success" onclick="toolGray();">Gray</button>
+	          </div>
+
               <div id="aContainer"></div>
             </div>
             <div class="panel-footer">
@@ -69,6 +78,10 @@
     document.getElementById('adminOutput').innerHTML = listArtBtn();
     document.getElementById('storage-dropdown').innerHTML = listArtLi();
 
+    // one instance for tool effects (for later use).
+    // (To-Do: hold instance later in application or provide via factory)
+    var toolEffects = new ToolEffects(myHandler);
+
     function listArtInOutput () {
       document.getElementById('adminOutput').innerHTML = listArtBtn();
       document.getElementById('storage-dropdown').innerHTML = listArtLi();
@@ -91,11 +104,30 @@
 	    });
     }
 
-
     function dontUseTool(){
       document.getElementById('myHandler').removeEventListener('mousedown');
       document.getElementById('myHandler').removeEventListener('mousemove');
     }
+
+	function toolContrast(value) {
+		toolEffects.contrast(value);
+	}
+
+	function toolNoise()
+	{
+		toolEffects.noise();
+    }
+
+	function toolInvert()
+	{
+		toolEffects.invert();
+	}
+
+    function toolGray()
+    {
+	    toolEffects.grayscale();
+    }
+
   </script>
   </body>
 </html>
