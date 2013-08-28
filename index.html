@@ -74,14 +74,23 @@
       document.getElementById('storage-dropdown').innerHTML = listArtLi();
     }
 
-    //trying to get the tool to fill the canvas
-    function useTool(){
-      var tool = new Tool();
-      var content = myHandler.getContext('2d');
-      document.getElementById('myCanvas').addEventListener('mousedown',function(){tool.draw(event, content);});
-      document.getElementById('myCanvas').addEventListener('mousemove',function(){tool.draw(event, content);});
-      document.getElementById('myCanvas').addEventListener('touchmove',function(){tool.draw(event, content);});
+	function useTool(){
+		var tool = new Tool();
+		var content = myHandler.getContext('2d');
+
+		document.getElementById('myCanvas').addEventListener('mousedown', function(event){
+			tool.draw(event, content);
+	    });
+
+	    document.getElementById('myCanvas').addEventListener('mousemove', function(event){
+			tool.draw(event, content);
+	    });
+
+		document.getElementById('myCanvas').addEventListener('touchmove', function(event){
+			tool.draw(event, content);
+	    });
     }
+
 
     function dontUseTool(){
       document.getElementById('myHandler').removeEventListener('mousedown');
