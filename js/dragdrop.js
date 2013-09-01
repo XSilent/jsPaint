@@ -31,8 +31,7 @@ var DragDrop = function(canvasHandler)
 		var bodyTag = document.getElementsByTagName('body')[0];
 
 		bodyTag.addEventListener('dragover', that.dragOver);
-
-		document.getElementById(_dropzoneId).addEventListener('drop', that.drop);
+		document.getElementById(_dropzoneId).addEventListener('drop', that.drop, false);
 	}
 
 	/**
@@ -42,11 +41,37 @@ var DragDrop = function(canvasHandler)
 	 */
 	this.drop = function(event)
 	{
-		//event.stopPropagation();
+		event.stopPropagation();
 		event.preventDefault();
 
-		var canvas = _canvasHandler.getContext('2d');
 		var url = event.dataTransfer.getData('Url');
+		var file = event.dataTransfer.files[0];
+		var fileLoader = new FileLoader(_canvasHandler, null, false);
+
+		// if file is an object, the user
+		// dropped a file from local filesystem,
+		// otherwise he dropped it from another
+		// website/application:
+		if (typeof file === 'object') {
+			fileLoader.fileToCanvas(file, _canvasHandler);
+		} else {
+			_urlToCanvas(url);
+		}
+
+		document.getElementById(_dropzoneId).style.border = '1px solid #428bca';
+
+		return true;
+	};
+
+	/**
+	 * Render image located by given url to canvas
+	 *
+	 * @param url
+	 * @private
+	 */
+	function _urlToCanvas(url)
+	{
+		var canvas = _canvasHandler.getContext('2d');
 
 		try {
 			var image = new Image();
@@ -70,10 +95,11 @@ var DragDrop = function(canvasHandler)
 		} catch(e) {
 			alert('Sorry, could not place image on canvas!');
 		}
+	}
 
-		document.getElementById(_dropzoneId).style.border = '1px solid #428bca';
-
-		return true;
+	this.dragEnd = function(event)
+	{
+		return false;
 	};
 
 	/**
@@ -82,7 +108,9 @@ var DragDrop = function(canvasHandler)
 	 */
 	this.dragOver = function (event)
 	{
+		event.stopPropagation();
 		event.preventDefault();
+		event.dataTransfer.dropEffect = 'copy';
 
 		if (event.target.id === 'myCanvas' || event.target.id === 'bla') {
 			document.getElementById(_dropzoneId).style.border = 'dotted 6px grey';

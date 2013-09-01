@@ -8,6 +8,7 @@
  */
 var FileLoader = function(canvasHandler, fileSelectorId, resizeCanvas)
 {
+	var that = this;
 	var _canvasHandler = canvasHandler;
 	var _fileSelectorId = fileSelectorId;
 	var _resizeCanvas = resizeCanvas;
@@ -20,6 +21,17 @@ var FileLoader = function(canvasHandler, fileSelectorId, resizeCanvas)
 	{
 		var files = event.target.files; // get FileList object
 
+		that.fileToCanvas(files[0], _canvasHandler)
+	};
+
+	/**
+	 * Render given file to given canvas
+	 *
+	 * @param file
+	 * @param canvasHandler
+	 */
+	this.fileToCanvas = function(file, canvasHandler)
+	{
 		try {
 			var image = new Image();
 
@@ -31,7 +43,7 @@ var FileLoader = function(canvasHandler, fileSelectorId, resizeCanvas)
 			{
 				aImg.src = e.target.result;
 
-				var canvas = _canvasHandler.getContext('2d');
+				var canvas = canvasHandler.getContext('2d');
 
 				if (_resizeCanvas) {
 					canvas.canvas.height = image.height;
@@ -52,7 +64,7 @@ var FileLoader = function(canvasHandler, fileSelectorId, resizeCanvas)
 				canvas.drawImage(image, 0, 0, destX, destY);
 			}; })(image);
 
-			reader.readAsDataURL(files[0]);
+			reader.readAsDataURL(file);
 
 		} catch(e) {
 			alert('Some error occurred: Could not open select file');
@@ -60,5 +72,7 @@ var FileLoader = function(canvasHandler, fileSelectorId, resizeCanvas)
 	};
 
 	// register event listener on file selector
-	document.getElementById(_fileSelectorId).addEventListener('change', this.handleFileSelect, false);
+	if (_fileSelectorId !== null) {
+		document.getElementById(_fileSelectorId).addEventListener('change', this.handleFileSelect, false);
+	}
 };
