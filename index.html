@@ -27,7 +27,7 @@
 
   </head>
   <body>
-    <div class="jsPaintContainer">
+    <div class="jsPaintContainer" id="jsPaintContainer">
       <div class="row">
         <div class="col-lg-6 col-offset-3">
           <div class="panel panel-primary">
@@ -40,6 +40,7 @@
                 <button class="btn btn-info" onclick="testDrawings();">test</button>
                 <button class="btn btn-default" onclick="undoLast();" id="button_undo" disabled="1">undo</button>
 				<button class="btn btn-default" onclick="loadFromDisk();" id="button_load">load</button>
+				<button class="btn btn-default" onclick="fullscreen();" id="button_fullscreen">fullscreen</button>
               </div>
               <div class="btn-group">
                 <button class="btn btn-success" onclick="useTool();">tool on</button>
@@ -77,6 +78,8 @@
 <!-- here comes the script! -->
 
   <script type="text/javascript">
+	var isFullscreen = false;
+
     document.getElementById('adminOutput').innerHTML = listArtBtn();
 
     var myHandler = new CanvasHandler();
@@ -126,6 +129,44 @@
 	function loadFromDisk()
 	{
 		document.getElementById('files').click();
+	}
+
+    /**
+     * Fullscreen
+     *
+     * Not yet stabilized HTML5 feature,
+     * therefore we have to ask for several
+     * possibilities
+     *
+     * Not nice ...
+     */
+	function fullscreen()
+	{
+		var elem = document.getElementById('jsPaintContainer');
+
+		if (!isFullscreen) {
+			if (elem.requestFullscreen) {
+				elem.requestFullscreen();
+			} else if (elem.mozRequestFullScreen) {
+				elem.mozRequestFullScreen();
+			} else if (elem.webkitRequestFullscreen) {
+				elem.webkitRequestFullscreen();
+			}
+		} else {
+			if (document.exitFullscreen) {
+				document.exitFullscreen();
+			}
+
+			if (document.cancelFullscreen) {
+				document.cancelFullScreen();
+			} else if (document.mozCancelFullScreen) {
+				document.mozCancelFullScreen();
+			} else if (document.webkitCancelFullScreen) {
+				document.webkitCancelFullScreen();
+			}
+		}
+
+		isFullscreen = !isFullscreen;
 	}
 
   </script>
