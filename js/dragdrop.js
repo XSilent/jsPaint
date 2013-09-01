@@ -86,10 +86,8 @@ var DragDrop = function(canvasHandler)
 
 		if (event.target.id === 'myCanvas' || event.target.id === 'bla') {
 			document.getElementById(_dropzoneId).style.border = 'dotted 6px grey';
-			document.getElementById('statusPanel').innerHTML = 'Drop image here!';
 		} else {
 			document.getElementById(_dropzoneId).style.border = '1px solid #428bca';
-			document.getElementById('statusPanel').innerHTML = '';
 		}
 
 		return false;
