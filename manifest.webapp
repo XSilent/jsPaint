@@ -1,0 +1,13 @@
+{
+  "name": "jsPaint",
+  "description": "Simple paint application",
+  "launch_path": "/index.html",
+  "icons": {
+    "128": "/img/logo.png"
+  },
+  "developer": {
+    "name": "XSilent and contributors",
+    "url": "https://github.com/XSilent/jsPaint"
+  },
+  "default_locale": "en"
+}
