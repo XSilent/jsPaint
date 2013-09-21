@@ -1,89 +1,77 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>jsPaint getting bootstrapped</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+<!doctype html>
+<html lang="de">
+<head>
+	<meta charset="utf-8">
+	<title>jsPaint</title>
+	<link rel=stylesheet href="css/screen.css"></link>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="js/jquery-2.0.3.min.js"></script>
+	<script src = "js/point.js"></script>
+	<script src = "js/canvasHandler.js"> </script>
+	<script src = "js/admin.js"></script>
+	<script src = "js/tool.js"></script>
+	<script src = "js/tool_effects.js"></script>
+	<script src = "js/fileloader.js"></script>
+</head>
+<body id="jsPaintContainer">
+	
+	<div class="pre-wrapper"></div>
+	<div class="wrapper">
+		<header class="clearfix">
+			<img src="img/logo.png" alt="jsPaint" class="logo" width="80" height="18">
+			<nav class="frt clearfix">
+				<button class="revert" onclick="undoLast();" id="button_undo" disabled="1"></button>
+				<button class="new" onclick="makeNew();"></button>
+				<button class="open" onclick="loadFromDisk();" id="button_load"></button>
+				<button class="save" onclick="saveIt();"></button>
+				<button class="fullsize" onclick="fullscreen();" id="button_fullscreen"></button>
+			</nav>
+		</header>
+		<section class="main clearfix">		
+			<aside>
+				<div class="button_double clearfix">
+					<button class="drawing_go" onclick="useTool();"></button>
+					<button class="drawing_end" onclick="dontUseTool();"></button>
+					<button class="foreground_color"></button>
+					<button class="background_color"></button>
+					<button class="contrast_high" onclick="toolEffects.contrast(20);"></button>
+					<button class="contrast_low" onclick="toolEffects.contrast(-20);"></button>
+					<button class="circle_shape"></button>
+					<button class="rectangle_shape"></button>
+				</div>
+				<div class="button_single clearfix">
+					<button class="greyscale" onclick="toolEffects.grayscale();"></button>
+					<button class="sepia"></button>
+					<button class="invert" onclick="toolEffects.invert();"></button>
+					<button class="noise" onclick="toolEffects.noise();"></button>
+					<button class="rotation"></button>
+					<button class="blur"></button>
+				</div>
+				<p class="copy">
+					&copy; 2013 jsPaint
+				</p>
+			</aside>
+			
+			<section class="drawing_area" id="aContainer"></section>
+			
+		</section>
+	</div>
 
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
 
-    <!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond)
-    <script src="js/respond.js"></script> -->
+	
+	
+<!-- Bitte ausbauen-->	
+<div id="adminOutput" class="hidden"></div>
+<ul class="dropdown-menu" id="storage-dropdown" class="hidden"></ul>
+<input type="file" id="files" name="files[]"  style="visibility:hidden;position:absolute;top:-50;left:-50"/>
+<!-- Ende bitte ausbauen-->
 
-    <!-- jsPaint -->
-	<script type = "text/javascript" src = "js/point.js"></script>
-	<script type = "text/javascript" src = "js/canvasHandler.js"> </script>
-    <script type = "text/javascript" src = "js/admin.js"></script>
-    <script type = "text/javascript" src = "js/tool.js"></script>
-	<script type = "text/javascript" src = "js/tool_effects.js"></script>
-	<script type = "text/javascript" src = "js/fileloader.js"></script>
-
-    <link href="css/jsPaint.css" rel="stylesheet" media="screen">
-
-  </head>
-  <body>
-    <div class="jsPaintContainer" id="jsPaintContainer">
-      <div class="row">
-        <div class="col-lg-6 col-offset-3">
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <h3 class="panel-title">jsPaint</h3>
-            </div>
-            <div class="panel-body">
-              <div class="btn-group">
-                <button class="btn btn-info" onclick="makeNew();">new</button>
-                <button class="btn btn-info" onclick="testDrawings();">test</button>
-                <button class="btn btn-default" onclick="undoLast();" id="button_undo" disabled="1">undo</button>
-				<button class="btn btn-default" onclick="loadFromDisk();" id="button_load">load</button>
-				<button class="btn btn-default" onclick="fullscreen();" id="button_fullscreen">fullscreen</button>
-              </div>
-              <div class="btn-group">
-                <button class="btn btn-success" onclick="useTool();">tool on</button>
-                <button class="btn btn-danger" onclick="dontUseTool();">tool off</button>
-              </div>
-	          <div class="btn-group">
-				<button class="btn btn-success" onclick="toolEffects.noise();">Noise</button>
-				<button class="btn btn-success" onclick="toolEffects.contrast(-20);">Contrast -</button>
-				<button class="btn btn-success" onclick="toolEffects.contrast(20);">Contrast +</button>
-				<button class="btn btn-success" onclick="toolEffects.invert();">Invert</button>
-				<button class="btn btn-success" onclick="toolEffects.grayscale();">Gray</button>
-	          </div>
-                <div id="aContainer"></div>
-            </div>
-            <div class="panel-footer">
-                <button onclick="saveIt();" class="btn btn-success">save</button>
-                <button onclick="localStorage.clear();listArtInOutput();" class="btn btn-warning">clear</button>
-              <div class="btn-group dropup">
-                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                  Storage <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" id="storage-dropdown"></ul>
-              </div>
-              <div id="adminOutput"></div>
-            </div>
-          </div>
-          <!-- textarea id="textarea_as_store" cols="50" rows="4" readonly="1" class="well"></textarea -->
-        </div> <!-- //col-lg-6 col-offset-3 -->
-      </div> <!-- //row -->
-    </div> <!-- //container -->
-
-    <!-- Hidden file selector to load images from local file system -->
-    <input type="file" id="files" name="files[]"  style="visibility:hidden;position:absolute;top:-50;left:-50"/>
-
-<!-- here comes the script! -->
-
-  <script type="text/javascript">
+<script type="text/javascript">
 	var isFullscreen = false;
 
     document.getElementById('adminOutput').innerHTML = listArtBtn();
 
     var myHandler = new CanvasHandler();
-    myHandler.appendNewCanvas('aContainer', 'myCanvas', 200, 200);
+    myHandler.appendNewCanvas('aContainer', 'myCanvas', 452, 408);
     document.getElementById('adminOutput').innerHTML = listArtBtn();
     document.getElementById('storage-dropdown').innerHTML = listArtLi();
 
@@ -169,23 +157,23 @@
 		isFullscreen = !isFullscreen;
 	}
 
-  </script>
-  </body>
+</script>
+  
+<script type="text/javascript" src = "js/dragdrop.js"></script>
 
-	<script type="text/javascript" src = "js/dragdrop.js"></script>
+<script type="text/javascript">
+	// By the time when we have introduced
+	// frameworks like jQuery, we can move this
+	// code back top the top - included in document.ready()
+	//
+	// init Drag'n'Drop functionality
+	var dragDrop = new DragDrop(myHandler);
+	dragDrop.init('aContainer');
 
-	<script type="text/javascript">
-		// By the time when we have introduced
-		// frameworks like jQuery, we can move this
-		// code back top the top - included in document.ready()
-		//
-		// init Drag'n'Drop functionality
-		var dragDrop = new DragDrop(myHandler);
-		dragDrop.init('aContainer');
+	// the fileLoader handles access to
+	// the local filesystem to load images
+	var fileLoader = new FileLoader(myHandler, 'files', false);
+</script>
 
-		// the fileLoader handles access to
-		// the local filesystem to load images
-		var fileLoader = new FileLoader(myHandler, 'files', false);
-	</script>
-
+</body>
 </html>
