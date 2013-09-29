@@ -28,4 +28,21 @@ var Point = function(x, y)
 		return result;
 	};
 
+	/**
+	 * Return rotated pixel
+	 *
+	 * @param angle
+	 * @return Point
+	 */
+	this.rotation = function(angle)
+	{
+		var result = new Point(),
+			c = Math.cos(angle),
+			s = Math.sin(angle);
+
+		result.x = c * this.x - s * this.y;
+		result.y = s * this.x + c * this.y;
+
+		return result;
+	};
 };
