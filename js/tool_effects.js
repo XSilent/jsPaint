@@ -101,4 +101,51 @@ var ToolEffects = function(canvasHandler)
 
 		context.putImageData(pixel, 0, 0);
 	};
+
+	/**
+	 * Rotate current image
+	 */
+	this.rotate = function(degree)
+	{
+		if (degree == null) {
+			return false;
+		}
+
+		var context = _canvasHandler.get2DContext();
+		var img = new Image();
+
+		// To ensure action on image
+		// will only start when loading
+		// is done:
+		img.onload = function()
+		{
+			_drawRotated(context, img, degree);
+		};
+
+		// Load current canvas as image
+		img.src = context.canvas.toDataURL();
+
+		return true;
+	};
+
+	/**
+	 * Draw given image rotated
+	 * by given degrees onto given
+	 * context
+	 *
+	 * @param context
+	 * @param image
+	 * @param degrees
+	 * @private
+	 */
+	function _drawRotated(context, image, degrees)
+	{
+		context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+		context.save();
+		context.translate(context.canvas.width / 2, context.canvas.height / 2 - 20);
+		context.rotate(degrees * Math.PI / 180);
+		context.drawImage(image, -image.width / 2, -image.width / 2);
+
+		context.restore();
+	}
 };

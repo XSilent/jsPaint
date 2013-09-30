@@ -40,8 +40,25 @@ var Point = function(x, y)
 			c = Math.cos(angle),
 			s = Math.sin(angle);
 
-		result.x = c * this.x - s * this.y;
-		result.y = s * this.x + c * this.y;
+		result.x = (c * this.x) - (s * this.y);
+		result.y = (s * this.x) + (c * this.y);
+
+		return result;
+	};
+
+	/**
+	 *
+	 * @param index
+	 * @param width
+	 * @param height
+	 * @return Point
+	 */
+	this.indexTo2D = function(index, width, height)
+	{
+		var result = new Point();
+
+		result.y = Math.ceil(index / width);
+		result.x = index - (width * (result.y - 1));
 
 		return result;
 	};

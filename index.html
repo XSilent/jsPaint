@@ -43,7 +43,7 @@
 					<button class="sepia"></button>
 					<button class="invert" onclick="toolEffects.invert();"></button>
 					<button class="noise" onclick="toolEffects.noise();"></button>
-					<button class="rotation"></button>
+					<button class="rotation" onclick="doRotate();" title="Rotate"></button>
 					<button class="blur"></button>
 				</div>
 				<p class="copy">
@@ -52,7 +52,7 @@
 			</aside>
 			
 			<section class="drawing_area" id="aContainer"></section>
-			
+
 		</section>
 	</div>
 
@@ -107,6 +107,18 @@
 		document.getElementById('myCanvas').removeEventListener( 'mousedown', handlerPenTool );
 		document.getElementById('myCanvas').removeEventListener( 'mousemove', handlerPenTool );
 		document.getElementById('myCanvas').removeEventListener( 'touchmove', handlerPenTool );
+	}
+
+	/**
+	 * Rotate image
+	 */
+	function doRotate()
+	{
+		var degree = prompt('Enter degree to rotate', 90);
+
+		if (degree != null) {
+			toolEffects.rotate(degree);
+		}
 	}
 
     /**
