@@ -9,6 +9,10 @@
 	<script src = "js/canvasHandler.js"> </script>
 	<script src = "js/admin.js"></script>
 	<script src = "js/tool.js"></script>
+	<script src = "js/tools.js"></script>
+	<script src = "js/brush.js"></script>
+	<script src = "js/eraser.js"></script>
+	<script src = "js/palette.js"></script>
 	<script src = "js/tool_effects.js"></script>
 	<script src = "js/fileloader.js"></script>
 </head>
@@ -29,8 +33,8 @@
 		<section class="main clearfix">		
 			<aside>
 				<div class="button_double clearfix">
-					<button class="drawing_go" onclick="useTool();"></button>
-					<button class="drawing_end" onclick="dontUseTool();"></button>
+					<button class="tool_brush" onclick="useTool('brush');"></button>
+					<button class="tool_eraser" onclick="useTool('eraser');"></button>
 					<button class="foreground_color"></button>
 					<button class="background_color"></button>
 					<button class="contrast_high" onclick="toolEffects.contrast(20);"></button>
@@ -75,38 +79,42 @@
     document.getElementById('adminOutput').innerHTML = listArtBtn();
     document.getElementById('storage-dropdown').innerHTML = listArtLi();
 
-    var handlerPenTool;
+	var myPalette = new Palette();
+	myPalette.addColor('black', 'rgba(0, 0, 0, 1)');
+	var myBrush = new Brush();
+	var myEraser = new Eraser();
+	var myTools = new Tools();
+	myTools.addTool('brush', myBrush);
+	myTools.addTool('eraser', myEraser);
+	myTools.setPalette(myPalette);
+	myTools.setCanvasHandler(myHandler);
 
     // one instance for tool effects (for later use).
     // (To-Do: hold instance later in application or provide via factory)
     var toolEffects = new ToolEffects(myHandler);
 
+	toolUsage = function(event)
+	{
+		var context = myHandler.getContext('2d');
+		myTools.useCurrent(event, context);
+	};
+	
+	document.getElementById('myCanvas').addEventListener( 'mousedown', toolUsage );
+	document.getElementById('myCanvas').addEventListener( 'mousemove', toolUsage );
+	document.getElementById('myCanvas').addEventListener( 'touchmove', toolUsage );
+	document.getElementById('myCanvas').addEventListener( 'mouseup', toolUsage );
+	document.getElementById('myCanvas').addEventListener( 'mouseout', toolUsage );
+	
+	
     function listArtInOutput ()
     {
       document.getElementById('adminOutput').innerHTML = listArtBtn();
       document.getElementById('storage-dropdown').innerHTML = listArtLi();
     }
 
-	function useTool()
+	function useTool(name)
 	{
-		var tool = new Tool(myHandler);
-		var content = myHandler.getContext('2d');
-
-		handlerPenTool = function(event)
-		{
-			tool.draw(event, content);
-		};
-
-		document.getElementById('myCanvas').addEventListener( 'mousedown', handlerPenTool );
-		document.getElementById('myCanvas').addEventListener( 'mousemove', handlerPenTool );
-		document.getElementById('myCanvas').addEventListener( 'touchmove', handlerPenTool );
-    }
-
-	function dontUseTool()
-	{
-		document.getElementById('myCanvas').removeEventListener( 'mousedown', handlerPenTool );
-		document.getElementById('myCanvas').removeEventListener( 'mousemove', handlerPenTool );
-		document.getElementById('myCanvas').removeEventListener( 'touchmove', handlerPenTool );
+		myTools.setSelected(name)
 	}
 
 	/**

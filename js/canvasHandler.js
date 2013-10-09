@@ -71,6 +71,15 @@ var CanvasHandler = function ()
 		return $dataObject;
 	}
 	
+	//public function, set an image object as canvas image, usable for tools
+	this.setImageObject = function(imageObject) 
+	{
+		canvasElement.setAttribute('width', imageObject.width);
+		canvasElement.setAttribute('height', imageObject.height);
+		this.get2DContext().width = imageObject.width;
+		this.get2DContext().height = imageObject.height;
+		this.get2DContext().putImageData(imageObject, 0, 0);
+	}
 	
 	//public function, returns an empty image object with the current dimensions
 	this.getClearImageObject = function(width, height)

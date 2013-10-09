@@ -40,8 +40,8 @@ button:after{
 .open:after{background-position: -1px -59px;}
 .save:after{background-position: 0 -90px;}
 .fullsize:after{background-position: 0px -121px;}
-.drawing_go:after{background-position: 2px -151px;}
-.drawing_end:after{background-position: 1px -180px;}
+.tool_brush:after{background-position: 2px -152px;}
+.tool_eraser:after{background-position: 1px -180px;}
 .foreground_color:after{background-position: 0px -210px;}
 .background_color:after{background-position: 1px -240px;}
 .contrast_high:after{background-position: 1px -271px; background-color:#000; padding: 14px 15px 13px; top:1px; left:1px}
