@@ -2,6 +2,7 @@ var Tool = function()
 {
 	var active = false;
 	var frontColor;
+
 	/**
 	 * Translate global coordinates
 	 * from event object to the canvas
@@ -19,5 +20,6 @@ var Tool = function()
 		point.y = (event.clientY - bb.top) * (canvasContext.canvas.height / bb.height);
 
 		return point;
-	}
+	};
+
 };

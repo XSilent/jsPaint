@@ -3,19 +3,19 @@ var Eraser = function()
 	this.setFrontColor = function(unusedVar) 
 	{
 		this.frontColor = new Array(0,0,0,0);
-	}
+	};
 	
 	this.drawStart = function(event, canvasContext) 
 	{
 		this.active = true;
 		this.draw(event, canvasContext);
-	}
+	};
 	
 	this.drawStop = function(event, canvasContext)
 	{
 		this.draw(event, canvasContext);
 		this.active = false;
-	}
+	};
 	
     this.draw = function(event, canvasContext) {
 	    if (!this.active) return;
@@ -37,7 +37,7 @@ var Eraser = function()
 			extract.data[i+1] = this.frontColor[1];
 			extract.data[i+2] = this.frontColor[2];
 			extract.data[i+3] = this.frontColor[3];
-		}
+		};
 		
 		canvasContext.putImageData(extract, leftX, topY);
     }

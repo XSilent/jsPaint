@@ -9,7 +9,7 @@ var Tools = function()
 	this.addTool = function(id, object)
 	{
 		_toolslist[id] = object;
-	}
+	};
 	
 	//switch the tool to be used
 	this.setSelected = function(id)
@@ -17,17 +17,17 @@ var Tools = function()
 		if (_toolslist[id] != null) {
 			_currentTool = id;
 		}
-	}
+	};
 	
 	this.setPalette = function(paletteObj) 
 	{
 		_palette = paletteObj;
-	}
+	};
 	
 	this.setCanvasHandler = function(handlerObj) 
 	{
 		_canvasHandler = handlerObj;
-	}
+	};
 	
 	this.useCurrent = function(event, context) 
 	{
@@ -49,5 +49,5 @@ var Tools = function()
 		}
 		
 		usedTool.draw(event, context)
-	}
-}
+	};
+};

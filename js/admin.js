@@ -1,4 +1,5 @@
-function saveArt (inputZeichenflaeche) {
+function saveArt (inputZeichenflaeche)
+{
 	var artName = prompt('Bitte Namen eingeben:');
 	if (localStorage.getItem(artName) == null) {
 		localStorage.setItem(artName,inputZeichenflaeche)
@@ -8,7 +9,8 @@ function saveArt (inputZeichenflaeche) {
 	}
 }
 
-function listArtLi () {
+function listArtLi ()
+{
 	var	artList = '';
 	for(var i in localStorage) {
 		artList = artList + '<li><a href="#" onclick="loadExternal(\'' +i+ '\')">' + i + '</a></li>';
@@ -16,7 +18,8 @@ function listArtLi () {
 	return artList;
 }
 
-function listArtBtn () {
+function listArtBtn ()
+{
 	var	artList = 'Art in Stock:</br>';
 	for(var i in localStorage) {
 		artList = artList + '<button onclick="loadExternal(\'' +i+ '\')" class="btn btn-primary">' + i + '</button>';
@@ -24,12 +27,14 @@ function listArtBtn () {
 	return artList;
 }
 
-function saveIt() {
+function saveIt()
+{
   saveArt(myHandler.export());
   listArtInOutput();
 }
 
-function loadExternal(id) {
+function loadExternal(id)
+{
   if (id == null) {
     id = prompt('Welche Kust soll geladen werden? ');
     myHandler.import(localStorage.getItem(id));
