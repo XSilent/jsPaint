@@ -10,7 +10,8 @@ var CanvasHandler = function ()
 	};
 	
 	//private function
-	function createNewCanvas (id, width, height) {
+	function createNewCanvas (id, width, height)
+	{
 		var c = document.createElement('canvas');
 		c.id = id;
 		c.setAttribute('width', width);
@@ -23,7 +24,7 @@ var CanvasHandler = function ()
 		that.addHistorySnapshot(); //'this' has another scope in private functions
 		
 		return c;
-	}
+	};
 
 	//public function, instruct this handler to use an existing Canvas Element
 	this.useExistingCanvas = function(id) 
@@ -50,13 +51,13 @@ var CanvasHandler = function ()
 	this.getContext = function(type)
 	{
 		return canvasElement.getContext(type);
-	}
+	};
 	
 	//public function, prefered for faster typing
 	this.get2DContext = function()
 	{
 		return canvasElement.getContext("2d");
-	}
+	};
 	
 	//public function, get ImageDataObject for storing/saving or image filters
 	this.getWholeImageObject = function() 
@@ -69,7 +70,7 @@ var CanvasHandler = function ()
 		//       so, data.length is 4 times the count of pixels (width * height)
 		// }
 		return $dataObject;
-	}
+	};
 	
 	//public function, set an image object as canvas image, usable for tools
 	this.setImageObject = function(imageObject) 
@@ -79,19 +80,19 @@ var CanvasHandler = function ()
 		this.get2DContext().width = imageObject.width;
 		this.get2DContext().height = imageObject.height;
 		this.get2DContext().putImageData(imageObject, 0, 0);
-	}
+	};
 	
 	//public function, returns an empty image object with the current dimensions
 	this.getClearImageObject = function(width, height)
 	{
 		return this.get2DContext().createImageData(width, height);
-	}
+	};
 	
 	//public function, call this function to create a new history snapshop of the canvas
 	this.addHistorySnapshot = function()
 	{
 		history.push(this.getWholeImageObject());
-	}
+	};
 	
 	//public function, use this as 'undo'
 	this.revertToLastSnapshot = function()
@@ -105,9 +106,8 @@ var CanvasHandler = function ()
 			this.get2DContext().height = imageObject.height;
 			this.get2DContext().putImageData(imageObject, 0, 0);
 		}
-	}
-	
-	
+	};
+
 	//public function, use this to check for undo possibility
 	this.canUndo = function()
 	{
@@ -116,12 +116,12 @@ var CanvasHandler = function ()
 		}
 		//else
 		return false;
-	}
-	
+	};
 	
 	//use this with a 'load' function to initialize the canvas with a picture
 	//awaits an canvas image data object as given by 'getClearImageObject'
-	this.setInitialImageData = function(imageObject) {
+	this.setInitialImageData = function(imageObject)
+	{
 		canvasElement.setAttribute('width', imageObject.width);
 		canvasElement.setAttribute('height', imageObject.height);
 		this.get2DContext().width = imageObject.width;
@@ -130,19 +130,17 @@ var CanvasHandler = function ()
 		
 		history = [];
 		this.addHistorySnapshot();
-	}
-	
+	};
 	
 	//public function, use this to make the canvas 'new'
 	this.clearAll = function()
 	{
 		this.get2DContext().clearRect(0, 0, dimensions.width, dimensions.height);
-	}
-
-
+	};
 
 	//just an example
-	this.export = function() {
+	this.export = function()
+	{
 		var imageObject = that.getWholeImageObject();
 		var temp = {width : imageObject.width, height : imageObject.height, data : []};
 
@@ -151,10 +149,11 @@ var CanvasHandler = function ()
 		}
 
 		return JSON.stringify(temp);
-	}
+	};
 
 	//just an example
-	this.import = function(jsonText) {
+	this.import = function(jsonText)
+	{
 		var myObject = JSON.parse(jsonText);
 		var imageObject = that.getClearImageObject(myObject.width, myObject.height);
 
@@ -163,8 +162,8 @@ var CanvasHandler = function ()
 		}
 
 		that.setInitialImageData(imageObject);
-	}
-}
+	};
+};
 
 
 //examples for the other teams

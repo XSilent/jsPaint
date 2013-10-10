@@ -3,19 +3,19 @@ var Brush = function()
 	this.setFrontColor = function(colorString) 
 	{
 		this.frontColor = colorString;
-	}
+	};
 	
 	this.drawStart = function(event, canvasContext) 
 	{
 		this.active = true;
 		this.draw(event, canvasContext);
-	}
+	};
 	
 	this.drawStop = function(event, canvasContext)
 	{
 		this.draw(event, canvasContext);
 		this.active = false;
-	}
+	};
 	
     this.draw = function(event, canvasContext) 
 	{
@@ -42,6 +42,6 @@ var Brush = function()
 	        canvasContext.closePath();
 	        canvasContext.fill();
 	        //canvasContext.stroke(posX,posY);
-    }
+    };
 };
 Brush.prototype = new Tool();

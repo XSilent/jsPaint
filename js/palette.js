@@ -9,7 +9,7 @@ var Palette = function()
 		if (!frontColor) {
 			frontColor = id;
 		}
-	}
+	};
 	
 	this.getFrontColor = function()
 	{
@@ -18,5 +18,5 @@ var Palette = function()
 			return;
 		}
 		return colorList[frontColor];
-	}
-}
+	};
+};
