@@ -23,11 +23,11 @@
 		<header class="clearfix">
 			<img src="img/logo.png" alt="jsPaint" class="logo" width="80" height="18">
 			<nav class="frt clearfix">
-				<button class="revert" onclick="undoLast();" id="button_undo" disabled="1"></button>
-				<button class="new" onclick="makeNew();"></button>
-				<button class="open" onclick="loadFromDisk();" id="button_load"></button>
-				<button class="save" onclick="saveIt();"></button>
-				<button class="fullsize" onclick="fullscreen();" id="button_fullscreen"></button>
+				<button class="revert" id="button_undo" disabled="1"></button>
+				<button class="new" id="button_new"></button>
+				<button class="open" id="button_load"></button>
+				<button class="save" id="button_save"></button>
+				<button class="fullsize" id="button_fullscreen"></button>
 			</nav>
 		</header>
 		<section class="main clearfix">		
@@ -65,19 +65,29 @@
 	
 <!-- Bitte ausbauen-->	
 <div id="adminOutput" class="hidden"></div>
-<ul class="dropdown-menu" id="storage-dropdown" class="hidden"></ul>
+<ul class="dropdown-menu hidden" id="storage-dropdown"></ul>
 <input type="file" id="files" name="files[]"  style="visibility:hidden;position:absolute;top:-50;left:-50"/>
 <!-- Ende bitte ausbauen-->
 
 <script type="text/javascript">
 	var isFullscreen = false;
+	var myHandler = new CanvasHandler();
+	var myAdmin = new Admin();
+	
+	myAdmin.setCanvasHandler(myHandler);
+	myAdmin.setUndoButton('button_undo');
+	
+	document.getElementById('button_undo').addEventListener( 'onclick', myAdmin.undoLast() );
+	document.getElementById('button_new').addEventListener( 'onclick', myAdmin.makeNew() );
+	document.getElementById('button_load').addEventListener( 'onclick', myAdmin.loadFromDisk() );
+	document.getElementById('button_save').addEventListener( 'onclick', myAdmin.saveIt() );
+	document.getElementById('button_fullscreen').addEventListener( 'onclick', myAdmin.fullscreen() );
+	
+    document.getElementById('adminOutput').innerHTML = myAdmin.listArtBtn();
 
-    document.getElementById('adminOutput').innerHTML = listArtBtn();
-
-    var myHandler = new CanvasHandler();
     myHandler.appendNewCanvas('aContainer', 'myCanvas', 452, 408);
-    document.getElementById('adminOutput').innerHTML = listArtBtn();
-    document.getElementById('storage-dropdown').innerHTML = listArtLi();
+    document.getElementById('adminOutput').innerHTML = myAdmin.listArtBtn();
+    document.getElementById('storage-dropdown').innerHTML = myAdmin.listArtLi();
 
 	var myPalette = new Palette();
 	myPalette.addColor('black', 'rgba(0, 0, 0, 1)');
@@ -97,6 +107,7 @@
 	{
 		var context = myHandler.getContext('2d');
 		myTools.useCurrent(event, context);
+		myAdmin.checkUndoButton();
 	};
 	
 	document.getElementById('myCanvas').addEventListener( 'mousedown', toolUsage );
@@ -108,8 +119,8 @@
 	
     function listArtInOutput ()
     {
-      document.getElementById('adminOutput').innerHTML = listArtBtn();
-      document.getElementById('storage-dropdown').innerHTML = listArtLi();
+      document.getElementById('adminOutput').innerHTML = myAdmin.listArtBtn();
+      document.getElementById('storage-dropdown').innerHTML = myAdmin.listArtLi();
     }
 
 	function useTool(name)
@@ -127,54 +138,6 @@
 		if (degree != null) {
 			toolEffects.rotate(degree);
 		}
-	}
-
-    /**
-     * Trigger the hidden file selector
-     * to start processing files from
-     * local filesystem
-     */
-	function loadFromDisk()
-	{
-		document.getElementById('files').click();
-	}
-
-    /**
-     * Fullscreen
-     *
-     * Not yet stabilized HTML5 feature,
-     * therefore we have to ask for several
-     * possibilities
-     *
-     * Not nice ...
-     */
-	function fullscreen()
-	{
-		var elem = document.getElementById('jsPaintContainer');
-
-		if (!isFullscreen) {
-			if (elem.requestFullscreen) {
-				elem.requestFullscreen();
-			} else if (elem.mozRequestFullScreen) {
-				elem.mozRequestFullScreen();
-			} else if (elem.webkitRequestFullscreen) {
-				elem.webkitRequestFullscreen();
-			}
-		} else {
-			if (document.exitFullscreen) {
-				document.exitFullscreen();
-			}
-
-			if (document.cancelFullscreen) {
-				document.cancelFullScreen();
-			} else if (document.mozCancelFullScreen) {
-				document.mozCancelFullScreen();
-			} else if (document.webkitCancelFullScreen) {
-				document.webkitCancelFullScreen();
-			}
-		}
-
-		isFullscreen = !isFullscreen;
 	}
 
 </script>

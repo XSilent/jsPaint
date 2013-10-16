@@ -16,8 +16,8 @@ var Tool = function()
 		var bb = canvasContext.canvas.getBoundingClientRect();
 		var point = new Point();
 
-		point.x = (event.clientX - bb.left) * (canvasContext.canvas.width / bb.width);
-		point.y = (event.clientY - bb.top) * (canvasContext.canvas.height / bb.height);
+		point.x = (event.clientX - bb.left);
+		point.y = (event.clientY - bb.top);
 
 		return point;
 	};

@@ -164,35 +164,3 @@ var CanvasHandler = function ()
 		that.setInitialImageData(imageObject);
 	};
 };
-
-
-//examples for the other teams
-function testDrawings() {
-  var content = myHandler.getContext('2d');
-  content.fillStyle = "rgba(0, 0, 200, 0.5)";
-  content.fillRect (0, 0, 50, 50);
-  
-  //call this after each step (tool usage or else)
-  myHandler.addHistorySnapshot();
-  
-  document.getElementById('button_undo').disabled = false;
-  
-  content.fillStyle = "rgba(0, 200, 0, 0.5)";
-  content.fillRect (25, 25, 75, 75);
-  
-  myHandler.addHistorySnapshot();
-  
-  content.fillStyle = "rgba(200, 0, 0, 0.5)";
-  content.fillRect (50, 50, 100, 100);
-  myHandler.addHistorySnapshot();
-}
-
-function undoLast() {
-  myHandler.revertToLastSnapshot();
-  document.getElementById('button_undo').disabled = !myHandler.canUndo();
-}
-
-function makeNew() {
-  myHandler.clearAll();
-  document.getElementById('button_undo').disabled = !myHandler.canUndo();
-}

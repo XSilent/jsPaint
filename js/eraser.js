@@ -25,9 +25,9 @@ var Eraser = function()
 		var x = point.x;
 		var y = point.y;
 		var leftX = Math.max(x - (width/2),0);
-		var deltaX = Math.min(x + (width/2),canvasContext.canvas.width - 1) - leftX;
+		var deltaX = Math.min(x + (width/2),canvasContext.canvas.width) - leftX;
 		var topY = Math.max(y - (width/2),0);
-		var deltaY = Math.min(y + (width/2),canvasContext.canvas.height - 1) - topY;
+		var deltaY = Math.min(y + (width/2),canvasContext.canvas.height) - topY;
 		
 		
 		var extract = canvasContext.getImageData(leftX, topY, deltaX, deltaY);
