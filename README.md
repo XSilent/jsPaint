@@ -10,3 +10,5 @@ and training programming - using JS.
 So please be aware that some things here might not be done
 in the perfect way (yet) - it's just work and improvement 
 in progress!
+
+The project page can be found here: http://xsilent.github.io/jsPaint/
